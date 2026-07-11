@@ -182,12 +182,12 @@ h1 {
 
 .hero-visual {
   position: relative;
-  min-height: 520px;
+  min-height: 590px;
 }
 
 .paper-stack {
   position: absolute;
-  inset: 24px 14px 78px 38px;
+  inset: 24px 14px 34px 38px;
 }
 
 .document-card {
@@ -198,7 +198,7 @@ h1 {
 }
 
 .document-card.front {
-  inset: 36px 26px 0 0;
+  inset: 36px 26px 22px 0;
   z-index: 3;
   padding: clamp(24px, 4vw, 44px);
 }
@@ -251,7 +251,7 @@ h1 {
 .stat-panel {
   position: absolute;
   right: 0;
-  bottom: 10px;
+  bottom: 18px;
   z-index: 4;
   width: min(245px, 58vw);
   padding: 22px;
@@ -577,7 +577,7 @@ footer strong {
   }
 
   .hero-visual {
-    min-height: 430px;
+    min-height: 500px;
   }
 
   .identity-grid,
@@ -607,15 +607,15 @@ footer strong {
   }
 
   .hero-visual {
-    min-height: 360px;
+    min-height: 430px;
   }
 
   .paper-stack {
-    inset: 16px 6px 72px 4px;
+    inset: 16px 6px 54px 4px;
   }
 
   .document-card.front {
-    inset: 24px 10px 0 0;
+    inset: 24px 10px 24px 0;
   }
 
   .doc-topline {
