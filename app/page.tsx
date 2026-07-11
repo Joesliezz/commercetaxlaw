@@ -1,16 +1,16 @@
 import {
   ArrowRight,
   BookOpenText,
-  BriefcaseBusiness,
   FileText,
   Landmark,
   Mail,
   Scale,
   Search,
   ShieldCheck,
-  Sparkles,
   UserRoundCheck
 } from "lucide-react";
+import Link from "next/link";
+import { articles as researchArticles } from "./articles-data";
 
 const topics = [
   {
@@ -45,27 +45,6 @@ const topics = [
   }
 ];
 
-const articles = [
-  {
-    category: "平台经济",
-    title: "平台涉税信息报送后，经营者需要补做哪些税务合规动作？",
-    summary: "从收入确认、发票留存、历史申报和风险自查四个层面建立应对清单。",
-    meta: "问题型文章样板"
-  },
-  {
-    category: "涉税争议",
-    title: "收到税务自查通知，不应只把它理解为一次材料补交",
-    summary: "自查阶段往往决定后续稽查、处罚和争议解决的事实框架。",
-    meta: "高意向咨询场景"
-  },
-  {
-    category: "发票风险",
-    title: "异常凭证与虚开风险之间，企业最容易误判的三个问题",
-    summary: "交易真实性、主观状态和补税处理不能被混为同一个法律问题。",
-    meta: "争议焦点拆解"
-  }
-];
-
 const services = [
   "收到税务自查通知、协查函、风险提示或税务约谈",
   "企业被稽查，涉及补税、滞纳金、罚款或移送风险",
@@ -95,7 +74,7 @@ export default function Home() {
         </a>
         <nav aria-label="主要导航">
           <a href="#topics">研究专题</a>
-          <a href="#articles">文章库</a>
+          <Link href="/articles">文章库</Link>
           <a href="#services">法律服务</a>
           <a href="#contact">联系咨询</a>
         </nav>
@@ -196,20 +175,24 @@ export default function Home() {
         <div className="section-heading">
           <p className="eyebrow">Article Library</p>
           <h2>文章库样板</h2>
-          <p>每篇文章建议采用“一句话结论、适用场景、法律依据、实务判断、风险提示、律师观点”的结构，便于读者阅读和 AI 引用。</p>
+          <p>第一批已迁移 8 篇公众号原创文章。后续可以继续按专题扩展为可检索、可引用的税法知识库。</p>
         </div>
         <div className="article-layout">
           <div className="article-list">
-            {articles.map((article) => (
-              <article className="article-card" key={article.title}>
+            {researchArticles.slice(0, 3).map((article) => (
+              <Link className="article-card" href={`/articles/${article.slug}`} key={article.title}>
                 <div>
                   <span className="category">{article.category}</span>
                   <h3>{article.title}</h3>
                   <p>{article.summary}</p>
                 </div>
-                <span className="meta">{article.meta}</span>
-              </article>
+                <span className="meta">{article.date}</span>
+              </Link>
             ))}
+            <Link className="article-more" href="/articles">
+              查看全部文章
+              <ArrowRight size={18} />
+            </Link>
           </div>
           <aside className="query-panel">
             <Search size={24} />
