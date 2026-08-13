@@ -1,12 +1,9 @@
 # Decap CMS 配置
-# ⚠️ 请将 YOUR_GITHUB_USERNAME 和 YOUR_REPO_NAME 替换为你的真实 GitHub 仓库信息
+# 使用 Netlify Git Gateway 后端，无需 GitHub OAuth
 
 backend:
-  name: github
-  repo: Joesliezz/commercetaxlaw    # ← GitHub 仓库名
+  name: git-gateway
   branch: main
-  base_url: https://commercetaxlaw.com           # ← 你的网站域名，用于 OAuth 回调
-  auth_scope: repo
 
 # 图片上传配置
 media_folder: public/images/uploads             # 图片存储在项目的这个目录
