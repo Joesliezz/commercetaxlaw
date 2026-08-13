@@ -3,7 +3,7 @@
 
 backend:
   name: github
-  repo: YOUR_GITHUB_USERNAME/YOUR_REPO_NAME    # ← 改成你的 GitHub 仓库，例如: zhuhaifeng/commercetaxlaw
+  repo: Joesliezz/commercetaxlaw    # ← GitHub 仓库名
   branch: main
   base_url: https://commercetaxlaw.com           # ← 你的网站域名，用于 OAuth 回调
   auth_scope: repo
