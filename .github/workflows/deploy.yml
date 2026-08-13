@@ -1,0 +1,54 @@
+name: Build and Deploy to Aliyun
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:      # 允许手动触发
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1. 检出代码
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      # 2. 安装 Node.js
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      # 3. 安装依赖
+      - name: Install dependencies
+        run: npm ci
+
+      # 4. 生成文章数据（从 Markdown 生成 articles-data.ts）
+      - name: Generate article data
+        run: node scripts/build-articles.mjs
+
+      # 5. 构建静态网站
+      - name: Build static site
+        run: npm run build:static
+
+      # 6. 部署到阿里云服务器（通过 SSH/SCP）
+      - name: Deploy to Aliyun via SCP
+        uses: appleboy/scp-action@v0.1.7
+        with:
+          host: ${{ secrets.ALIYUN_HOST }}
+          username: ${{ secrets.ALIYUN_USER }}
+          key: ${{ secrets.ALIYUN_SSH_KEY }}
+          port: ${{ secrets.ALIYUN_PORT || '22' }}
+          source: "out/*"
+          target: "/var/www/commercetaxlaw"
+          strip_components: 1
+          rm: true                    # 先清空目标目录再上传，避免残留旧文件
+          overwrite: true
+
+      # 7. 部署完成通知（可选，成功后在 Actions 日志显示）
+      - name: Deployment Summary
+        run: |
+          echo "✅ 部署完成！"
+          echo "网站地址: https://commercetaxlaw.com"

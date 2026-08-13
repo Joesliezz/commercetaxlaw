@@ -1,0 +1,133 @@
+# Decap CMS 配置
+# ⚠️ 请将 YOUR_GITHUB_USERNAME 和 YOUR_REPO_NAME 替换为你的真实 GitHub 仓库信息
+
+backend:
+  name: github
+  repo: YOUR_GITHUB_USERNAME/YOUR_REPO_NAME    # ← 改成你的 GitHub 仓库，例如: zhuhaifeng/commercetaxlaw
+  branch: main
+  base_url: https://commercetaxlaw.com           # ← 你的网站域名，用于 OAuth 回调
+  auth_scope: repo
+
+# 图片上传配置
+media_folder: public/images/uploads             # 图片存储在项目的这个目录
+public_folder: /images/uploads                  # 网站上访问图片的 URL 路径
+
+# 网站元信息（显示在 CMS 左上角）
+site_url: https://commercetaxlaw.com
+display_url: https://commercetaxlaw.com
+logo_url: /logo.svg
+
+# 文章集合配置
+collections:
+  - name: articles
+    label: 文章库
+    label_singular: 文章
+    folder: content/articles
+    create: true                          # 允许新建文章
+    delete: true                          # 允许删除文章
+    slug: "{{slug}}"                      # 文件名使用用户输入的 slug
+    path: "{{slug}}.md"                   # 文件路径模板
+    sortable_fields: ["date", "title"]
+    view_filters:
+      - label: 推荐文章
+        field: featured
+        pattern: true
+      - label: 税务稽查与争议解决
+        field: category
+        pattern: "税务稽查与争议解决"
+      - label: 虚开、异常凭证与发票风险
+        field: category
+        pattern: "虚开、异常凭证与发票风险"
+      - label: 平台经济与灵活用工
+        field: category
+        pattern: "平台经济与灵活用工"
+      - label: 股权交易与企业主税务
+        field: category
+        pattern: "股权交易与企业主税务"
+      - label: 数智化征管与税收新规
+        field: category
+        pattern: "数智化征管与税收新规"
+      - label: 增值税、所得税与跨境服务
+        field: category
+        pattern: "增值税、所得税与跨境服务"
+    view_groups:
+      - label: 分类
+        field: category
+      - label: 年份
+        field: date
+        pattern: "\\d{4}"
+
+    # 文章编辑表单字段
+    fields:
+      - label: "文章标题"
+        name: title
+        widget: string
+        required: true
+        hint: "显示在文章页面和列表中的标题"
+
+      - label: "URL 别名"
+        name: slug
+        widget: string
+        required: true
+        pattern: ['^[a-z0-9]+(?:-[a-z0-9]+)*$', "只能用小写英文字母、数字和横线，例如: platform-tax-compliance"]
+        hint: "这将成为文章的网址，只能用小写字母、数字和横线。例如: 895-vat-invoices-good-fa"
+
+      - label: "发布日期"
+        name: date
+        widget: date
+        format: YYYY-MM-DD
+        required: true
+
+      - label: "分类"
+        name: category
+        widget: select
+        required: true
+        options:
+          - { label: "税务稽查与争议解决", value: "税务稽查与争议解决" }
+          - { label: "虚开、异常凭证与发票风险", value: "虚开、异常凭证与发票风险" }
+          - { label: "平台经济与灵活用工", value: "平台经济与灵活用工" }
+          - { label: "股权交易与企业主税务", value: "股权交易与企业主税务" }
+          - { label: "数智化征管与税收新规", value: "数智化征管与税收新规" }
+          - { label: "增值税、所得税与跨境服务", value: "增值税、所得税与跨境服务" }
+
+      - label: "作者"
+        name: author
+        widget: string
+        required: true
+        default: "朱海峰"
+
+      - label: "摘要"
+        name: summary
+        widget: text
+        required: true
+        hint: "显示在文章列表和搜索结果中的一句话摘要"
+
+      - label: "SEO 描述"
+        name: description
+        widget: text
+        required: false
+        hint: "如果不填，会默认使用摘要"
+
+      - label: "公众号原文链接"
+        name: sourceUrl
+        widget: string
+        required: false
+        hint: "如果文章首发在公众号，填写原文链接"
+
+      - label: "首页推荐"
+        name: featured
+        widget: boolean
+        default: false
+        hint: "开启后文章会显示在首页精选区域"
+
+      - label: "文章正文"
+        name: body
+        widget: markdown
+        required: true
+        hint: |
+          支持 Markdown 格式：
+          ## 二级标题
+          ### 三级标题
+          **粗体** *斜体*
+          [链接文字](https://...)
+          > 引用
